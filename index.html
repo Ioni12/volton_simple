@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volton | Fixed-price electricity for business</title>
+<meta name="description" content="Business electricity in Albania. Compare a fixed-price Volton offer with your current electricity costs. Clear terms and direct support.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Photos: free Pexels images (6415966 dam, 414837 wind turbines), hotlinked. Download and host locally before launch. */
+:root{
+  --cream:#f9f9f2;
+  --sage:#eef0e3;
+  --forest:#1e4033;
+  --olive:#6b8a4b;
+  --leaf:#b9d58a;
+  --muted:#5f7167;
+  --line:rgba(30,64,51,.16);
+  --head:"Instrument Serif",Georgia,serif;
+  --body:"Inter",system-ui,sans-serif;
+  --wrap:1040px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--cream);color:var(--forest);font:400 16px/1.7 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+p{margin:0}
+:focus-visible{outline:2px solid var(--olive);outline-offset:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--forest);color:#fff;padding:10px 16px;z-index:100}
+.skip:focus{left:8px}
+
+h1,h2,h3{font-family:var(--head);font-weight:400;line-height:1.05;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(3.2rem,7vw,5.8rem)}
+h2{font-size:clamp(2.2rem,4.4vw,3.4rem)}
+h3{font-size:1.5rem;line-height:1.2}
+h1 em{display:block;font-style:normal;color:var(--olive)}
+h2 em{font-style:normal;color:inherit}
+.lede{color:var(--muted);font-size:1.1rem;max-width:40ch}
+
+/* buttons + links */
+.btn{display:inline-block;font:500 .92rem/1 var(--body);padding:18px 32px;border:1px solid var(--forest);background:var(--forest);color:var(--cream);text-decoration:none;cursor:pointer;transition:background .25s,color .25s}
+.btn:hover{background:transparent;color:var(--forest)}
+.link{font-size:.92rem;font-weight:500;text-decoration:none;color:var(--forest);padding-bottom:4px;border-bottom:1px solid var(--forest);transition:opacity .25s}
+.link:hover{opacity:.6}
+
+/* logo wordmark */
+.logo{font:400 1.9rem/1 var(--head);color:var(--forest);text-decoration:none}
+footer a.logo{display:inline-block;padding:0;color:var(--forest)}
+
+/* header */
+.site-head{position:sticky;top:0;z-index:50;background:var(--cream)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:88px}
+.nav{display:flex;gap:40px}
+.nav a{text-decoration:none;font-size:.9rem;color:var(--muted);transition:color .25s}
+.nav a:hover{color:var(--forest)}
+
+/* hero */
+.hero{position:relative;background:var(--sage);overflow:hidden}
+.hero-img{position:absolute;top:0;right:0;width:62%;height:100%;object-fit:cover;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.5) 30%,#000 70%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.5) 30%,#000 70%)}
+.hero-in{position:relative;min-height:min(78vh,720px);display:flex;flex-direction:column;justify-content:center;padding:96px 32px}
+.hero h1{max-width:9.5ch}
+.hero .sub{color:var(--muted);font-size:1.1rem;margin-top:32px}
+.hero .actions{display:flex;flex-wrap:wrap;align-items:center;gap:32px;margin-top:40px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 36px;margin-top:72px;font-size:.88rem;color:var(--muted)}
+.facts a{text-decoration:none;color:var(--forest)}
+.hero h1,.hero .sub,.hero .actions,.hero .facts{animation:rise .9s ease both}
+.hero .sub{animation-delay:.1s}.hero .actions{animation-delay:.2s}.hero .facts{animation-delay:.3s}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* sections */
+section{padding:120px 0}
+.alt{background:var(--sage)}
+.head{margin-bottom:56px}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+.service h3{margin-bottom:10px}
+.service p{color:var(--muted)}
+
+/* fixed price */
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.price h2{margin-bottom:32px}
+.price .big{font:400 1.5rem/1.3 var(--head)}
+.price .big span{display:block;color:var(--olive)}
+.price .note{color:var(--muted);margin-top:16px;font-size:.95rem}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart .vary{fill:none;stroke:rgba(30,64,51,.3);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.chart .fixed{stroke:var(--forest);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.chart.in .vary{animation:draw 2.2s ease-out forwards}
+.chart.in .fixed{animation:draw 1.2s .8s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.chart text{font:400 12px var(--body);fill:var(--muted)}
+.chart .lab-fixed{fill:var(--forest);font-weight:500}
+.chart line.base{stroke:var(--line)}
+
+/* small business */
+.biz{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.biz img{width:100%;aspect-ratio:4/3.6;object-fit:cover;background:var(--sage);min-height:300px}
+.biz-body{display:flex;flex-direction:column;align-items:flex-start;gap:26px}
+.biz-body .tag{font-size:.85rem;color:var(--olive)}
+.volts-label{font-size:.85rem;color:var(--muted)}
+.volts{display:flex;flex-wrap:wrap;gap:0;margin-top:4px;font-family:var(--head);font-size:1.5rem}
+.volts b{font-weight:400}
+.volts b+b::before{content:"·";margin:0 .6em;color:var(--olive)}
+
+/* calculator */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.panel h3{margin-bottom:4px}
+.hint{color:var(--muted);font-size:.88rem}
+.field{display:block;margin-top:28px}
+.field>span{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-bottom:4px}
+.field>span em{font-style:normal}
+.input{display:flex;align-items:center;border-bottom:1px solid var(--forest);transition:border-color .25s}
+.input:focus-within{border-color:var(--olive)}
+.input input,.input select,.input textarea{flex:1;min-width:0;width:100%;border:0;background:none;font:400 1.3rem var(--body);color:var(--forest);padding:8px 0;outline:none}
+.input small{color:var(--muted);font-size:.85rem}
+.panel .btn{margin-top:36px}
+.result .lbl{color:var(--muted);font-size:.85rem}
+.result .num{font:400 clamp(3.2rem,6vw,4.8rem)/1 var(--head);margin-top:8px}
+.result .num small{font:400 .9rem var(--body);color:var(--muted);margin-left:10px}
+.result .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-top:1px solid var(--line);margin-top:40px}
+.result .row+.row{margin-top:0}
+.result .row span{color:var(--muted);font-size:.9rem}
+.result .row strong{font:400 1.3rem var(--head);text-align:right}
+.result .diff{display:none;margin-top:8px;padding-top:18px;border-top:1px solid var(--line);color:var(--olive);font-size:.92rem;font-weight:500}
+.result .diff.show{display:block}
+.method{margin-top:64px;font-size:.85rem;color:var(--muted);max-width:80ch}
+.method strong{color:var(--forest);font-weight:500}
+.flash{animation:flash .5s ease}
+@keyframes flash{from{opacity:.4}to{opacity:1}}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;counter-reset:s}
+.steps li{counter-increment:s}
+.steps li::before{content:counter(s);display:block;font:500 .85rem var(--body);color:var(--olive);margin-bottom:14px}
+.steps h3{margin-bottom:8px}
+.steps p{color:var(--muted)}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about .tag{font-size:.85rem;color:var(--olive);margin-bottom:14px}
+.about .link{display:inline-block;margin-top:32px}
+.licences{display:grid;gap:0}
+.lic{display:block;text-decoration:none;padding:22px 0;border-top:1px solid var(--line);transition:opacity .25s}
+.lic:last-of-type{border-bottom:1px solid var(--line)}
+.lic:hover{opacity:.6}
+.lic b{display:block;font:400 1.4rem var(--head)}
+.lic span{color:var(--muted);font-size:.88rem}
+.fine{margin-top:16px;color:var(--muted);font-size:.85rem}
+
+/* offer (the one dark band) */
+.offer{background:var(--forest);color:var(--cream)}
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.offer .lede{color:rgba(249,249,242,.75);margin-top:20px}
+.contact{margin-top:36px;display:grid;gap:4px}
+.contact a{font:400 1.5rem var(--head);text-decoration:none;width:fit-content}
+.contact a:hover{color:var(--leaf)}
+.form h3{margin-bottom:4px}
+.form .hint{color:rgba(249,249,242,.65)}
+.form .field>span{color:rgba(249,249,242,.65)}
+.form .input{border-color:rgba(249,249,242,.5)}
+.form .input:focus-within{border-color:var(--leaf)}
+.form .input input,.form .input select,.form .input textarea{color:var(--cream)}
+.form select option{color:#1e4033}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+.form textarea{resize:vertical;min-height:140px;line-height:1.5;font-size:1rem}
+.form .btn{background:var(--cream);color:var(--forest);border-color:var(--cream)}
+.form .btn:hover{background:transparent;color:var(--cream)}
+.form .after{display:none;margin-top:32px}
+.form .after.show{display:block}
+.form .after .btn{margin-top:18px;text-align:center;width:100%}
+.form .tiny{font-size:.82rem;color:rgba(249,249,242,.65);margin-top:12px}
+
+/* faq */
+.faq-list{max-width:760px}
+details{border-top:1px solid var(--line)}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font:400 1.4rem/1.25 var(--head)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:300 1.6rem/1 var(--body);color:var(--olive);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 48px 26px 0;color:var(--muted)}
+
+/* footer */
+footer{background:var(--cream);padding:80px 0 36px;border-top:1px solid var(--line)}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:48px;font-size:.92rem}
+footer h4{margin:0 0 12px;font:400 1.2rem var(--head)}
+footer a{display:block;text-decoration:none;padding:2px 0;color:var(--muted);transition:color .25s}
+footer a:hover{color:var(--forest)}
+.legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:64px;font-size:.82rem;color:var(--muted)}
+.legal a{display:inline}
+
+/* responsive */
+@media (max-width:900px){
+  section{padding:80px 0}
+  .bar{height:68px}
+  .nav{display:none}
+  .services,.steps,.price-grid,.biz,.calc-grid,.about-grid,.offer-grid,.foot{grid-template-columns:1fr}
+  .price-grid,.offer-grid,.about-grid,.biz,.calc-grid{gap:48px}
+  .services,.steps{gap:36px}
+  .form .two{grid-template-columns:1fr}
+  .hero-in{padding:56px 32px 340px;min-height:0}
+  .hero-img{top:auto;bottom:0;width:100%;height:320px;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 60%);
+    mask-image:linear-gradient(to bottom,transparent 0%,#000 60%)}
+  .facts{margin-top:40px}
+  .method{margin-top:48px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .chart .vary,.chart .fixed{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#permbajtja">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap bar">
+    <a class="logo" href="#" aria-label="Volton">Volton</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#zgjidhjet">Services</a>
+      <a href="#kalkulatori">Compare costs</a>
+      <a href="#rreth">About Volton</a>
+      <a href="#pyetje">FAQs</a>
+    </nav>
+    <a class="link" href="#oferta">Get an offer</a>
+  </div>
+</header>
+
+<main id="permbajtja">
+
+<div class="hero">
+  <img class="hero-img" src="https://images.pexels.com/photos/6415966/pexels-photo-6415966.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Hydroelectric dam on a river in a green valley">
+  <div class="wrap hero-in">
+    <h1>Plan with a fixed <em>electricity price.</em></h1>
+    <p class="sub">See what you could save.</p>
+    <div class="actions">
+      <a class="btn" href="#oferta">Get an offer</a>
+      <a class="link" href="#kalkulatori">Compare costs</a>
+    </div>
+    <div class="facts">
+      <span>Fixed rate</span>
+      <span>One year or longer</span>
+      <a href="tel:+355674001007">+355 67 4001 007</a>
+    </div>
+  </div>
+</div>
+
+<section id="zgjidhjet">
+  <div class="wrap">
+    <div class="head"><h2>A clearer <em>budget.</em></h2></div>
+    <div class="services">
+      <div class="service"><h3>Electricity supply</h3><p>Fixed-price contracts for your business.</p></div>
+      <div class="service"><h3>Consumption analysis</h3><p>An offer based on your usage.</p></div>
+      <div class="service"><h3>Capacity management</h3><p>Supply matched to your capacity needs.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="price">
+  <div class="wrap price-grid">
+    <div>
+      <h2>Fixed price. <em>No hidden costs.</em></h2>
+      <p class="big">Price per kWh <span>Fixed for your agreed term</span></p>
+      <p class="note">All charges are set out in your contract.</p>
+    </div>
+    <div class="chart" id="chart" aria-hidden="true">
+      <svg viewBox="0 0 600 260">
+        <line class="base" x1="0" y1="230" x2="600" y2="230"/>
+        <path class="vary" pathLength="1" d="M0 170 C40 80 70 220 110 150 S170 50 210 130 S270 225 310 160 S380 30 420 105 S490 215 530 135 S580 70 600 100"/>
+        <line class="fixed" pathLength="1" x1="0" y1="130" x2="600" y2="130"/>
+        <text x="0" y="252">Price that moves</text>
+        <text class="lab-fixed" x="0" y="112">Fixed per kWh</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap biz">
+    <img src="https://images.pexels.com/photos/414837/pexels-photo-414837.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Wind turbines on hills at sunset; illustrative photograph" loading="lazy">
+    <div class="biz-body">
+      <p class="tag">For small businesses</p>
+      <h2>Could you pay <em>less?</em></h2>
+      <p class="lede">Compare your current rate with a Volton offer.</p>
+      <div>
+        <p class="volts-label">Eligible connections</p>
+        <div class="volts"><b>6</b><b>10</b><b>20</b><b>35</b><b>110 kV</b></div>
+      </div>
+      <a class="btn" href="#oferta">Get an offer</a>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="kalkulatori">
+  <div class="wrap">
+    <div class="head"><h2>Compare <em>costs.</em></h2></div>
+    <div class="calc-grid">
+      <form class="panel" id="calc" novalidate>
+        <h3>Your figures</h3>
+        <p class="hint">Example figures. Enter your own.</p>
+        <label class="field"><span>Monthly consumption</span>
+          <div class="input"><input id="kwh" type="number" inputmode="decimal" min="0" step="any" value="10000"><small>kWh</small></div></label>
+        <label class="field"><span>Current rate</span>
+          <div class="input"><input id="cur" type="number" inputmode="decimal" min="0" step="any" value="14"><small>ALL/kWh</small></div></label>
+        <label class="field"><span>Offered rate <em>Optional</em></span>
+          <div class="input"><input id="off" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 12.5"><small>ALL/kWh</small></div></label>
+        <p class="hint" style="margin-top:8px">Use a rate from an offer you have received.</p>
+        <p class="hint" style="margin-top:14px">Compare rates on the same basis. VAT excluded.</p>
+        <button class="btn" type="submit">Compare costs</button>
+      </form>
+      <div class="result" aria-live="polite">
+        <p class="lbl">Estimated monthly cost</p>
+        <p class="num"><span id="m">140,000</span><small>ALL / month</small></p>
+        <div class="row"><span>12-month estimate</span><strong id="y">1,680,000 ALL</strong></div>
+        <div class="row"><span>Rate impact</span><strong id="r">1 ALL/kWh = 10,000 ALL / month</strong></div>
+        <p class="diff" id="d"></p>
+      </div>
+    </div>
+    <p class="method"><strong>How this comparison works.</strong> Cost = usage × rate, with the same usage for both rates. Annual figures assume unchanged monthly usage and rates. Estimate based on your inputs; your contract confirms the final charges. No prefilled Volton tariff or guaranteed saving. Calculated on your device.</p>
+    <a class="link" style="display:inline-block;margin-top:32px" href="#oferta">Get an offer</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><h2>Switch with <em>clarity.</em></h2></div>
+    <ol class="steps">
+      <li><h3>Share your bills.</h3></li>
+      <li><h3>Review your offer.</h3><p>Check price, term and existing obligations.</p></li>
+      <li><h3>Agree a start date.</h3><p>Confirm the documents before signing.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="alt about" id="rreth">
+  <div class="wrap about-grid">
+    <div>
+      <p class="tag">Volton SHPK</p>
+      <h2>Business electricity. <em>In Albania.</em></h2>
+      <a class="link" href="https://volton.al/" target="_blank" rel="noopener">Company information</a>
+    </div>
+    <div class="licences">
+      <a class="lic" href="https://www.ere.gov.al/media/files/2024/12/26/media/files/2024/12/11/Vendim_Nr_268_2024.pdf" target="_blank" rel="noopener"><b>ERE Supply licence</b><span>ERE decision 268 · 10 December 2024</span></a>
+      <a class="lic" href="https://www.ere.gov.al/media/files/2025/02/11/Vendim_Nr_31_2025.pdf" target="_blank" rel="noopener"><b>ERE Trading licence</b><span>ERE decision 31 · 3 February 2025</span></a>
+      <p class="fine">Licences do not approve tariffs or offers.</p>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="oferta">
+  <div class="wrap offer-grid">
+    <div>
+      <h2>Get <em>an offer.</em></h2>
+      <p class="lede">Let’s review your electricity costs.</p>
+      <div class="contact">
+        <a href="tel:+355674001007">+355 67 4001 007</a>
+        <a href="mailto:info@volton.al">info@volton.al</a>
+      </div>
+    </div>
+    <form class="form" id="enq" novalidate>
+      <h3>Prepare your enquiry</h3>
+      <p class="hint" style="margin-top:6px">Prepares a message on your device. Nothing sends automatically.</p>
+      <label class="field"><span>Business name</span><div class="input"><input id="bn" type="text" autocomplete="organization"></div></label>
+      <div class="two">
+        <label class="field"><span>Contact name</span><div class="input"><input id="cn" type="text" autocomplete="name"></div></label>
+        <label class="field"><span>Phone</span><div class="input"><input id="ph" type="tel" autocomplete="tel"></div></label>
+      </div>
+      <div class="two">
+        <label class="field"><span>Connection voltage</span><div class="input"><select id="vt"><option>Not sure</option><option>6 kV</option><option>10 kV</option><option>20 kV</option><option>35 kV</option><option>110 kV</option></select></div></label>
+        <label class="field"><span>Monthly consumption (kWh)</span><div class="input"><input id="mc" type="number" inputmode="decimal" min="0" step="any"></div></label>
+      </div>
+      <button class="btn" type="submit" style="margin-top:30px;width:100%">Get an offer</button>
+      <div class="after" id="after">
+        <label class="field" style="margin-top:0"><span>Review your message</span><div class="input"><textarea id="msg"></textarea></div></label>
+        <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Open WhatsApp</a>
+        <p class="tiny">Review it before opening WhatsApp.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="pyetje">
+  <div class="wrap">
+    <div class="head"><h2>Good to <em>know.</em></h2></div>
+    <div class="faq-list">
+      <details><summary>Who can apply?</summary><p>Businesses connected at 6, 10, 20, 35 or 110 kV.</p></details>
+      <details><summary>Is my total bill fixed?</summary><p>Your price per kWh is fixed. Your total varies with usage.</p></details>
+      <details><summary>How long is the contract?</summary><p>One year or longer, as agreed in your contract.</p></details>
+      <details><summary>What do I need?</summary><p>Recent bills, your current contract and supply-point details.</p></details>
+      <details><summary>Is the calculator an offer?</summary><p>No. Request a Volton offer to confirm your rate and terms.</p></details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="logo" href="#" aria-label="Volton">Volton</a></div>
+      <div><h4>Explore</h4><a href="#zgjidhjet">Services</a><a href="#kalkulatori">Compare costs</a><a href="#rreth">About and licensing</a></div>
+      <div><h4>Contact</h4><a href="tel:+355674001007">+355 67 4001 007</a><a href="mailto:info@volton.al">info@volton.al</a><p style="margin-top:10px;color:var(--muted)">Rruga Rezervat e Shtetit, Lundër 1<br>Tirana, Albania</p></div>
+    </div>
+    <div class="legal"><span>© 2026 Volton SHPK · <a href="https://volton.al/">volton.al</a></span><a href="#">Back to top</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var fmt=function(n){return Math.round(n).toLocaleString("en-US")};
+
+  function calc(animate){
+    var kwh=parseFloat($("kwh").value)||0,cur=parseFloat($("cur").value)||0,off=parseFloat($("off").value);
+    var monthly=kwh*cur;
+    $("m").textContent=fmt(monthly);
+    $("y").textContent=fmt(monthly*12)+" ALL";
+    $("r").textContent="1 ALL/kWh = "+fmt(kwh)+" ALL / month";
+    var d=$("d");
+    if(off>0&&kwh>0){
+      var diff=(cur-off)*kwh;
+      d.textContent="At "+off+" ALL/kWh: "+fmt(Math.abs(diff))+" ALL / month "+(diff>=0?"lower":"higher")+" ("+fmt(Math.abs(diff)*12)+" ALL over 12 months).";
+      d.classList.add("show");
+    }else{d.classList.remove("show")}
+    if(animate){var n=document.querySelector(".result");n.classList.remove("flash");void n.offsetWidth;n.classList.add("flash")}
+  }
+  $("calc").addEventListener("submit",function(e){e.preventDefault();calc(true)});
+  ["kwh","cur","off"].forEach(function(i){$(i).addEventListener("input",function(){calc(false)})});
+  calc(false);
+
+  /* enquiry -> WhatsApp (nothing sends automatically) */
+  function upd(){$("wa").href="https://wa.me/355674001007?text="+encodeURIComponent($("msg").value)}
+  $("enq").addEventListener("submit",function(e){
+    e.preventDefault();
+    $("msg").value=["Hello Volton, I would like an electricity offer.",
+      "Business: "+($("bn").value||"-"),
+      "Contact: "+($("cn").value||"-"),
+      "Phone: "+($("ph").value||"-"),
+      "Connection voltage: "+$("vt").value,
+      "Monthly consumption: "+($("mc").value?$("mc").value+" kWh":"-")].join("\n");
+    $("after").classList.add("show");
+    upd();
+    $("msg").focus();
+  });
+  $("msg").addEventListener("input",upd);
+
+  /* chart draws once when scrolled into view */
+  var c=$("chart");
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(es,o){es.forEach(function(x){if(x.isIntersecting){c.classList.add("in");o.disconnect()}})},{threshold:.4}).observe(c);
+  }else{c.classList.add("in")}
+})();
+</script>
+</body>
+</html>
